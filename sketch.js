@@ -35,7 +35,7 @@ function setup() {
   c = createCanvas(720, 720)
   c.parent(select('#rendering'))
   ctx = c.drawingContext
-  console.log(ctx)
+
   noFill()
   imageMode(CENTER)
 
