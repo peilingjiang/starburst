@@ -1,6 +1,9 @@
 'use strict'
+
 let ctx
 let midPoint
+
+let saveButton
 
 /* --------------------------------- Sliders -------------------------------- */
 let polygon, radius, thickness, innerLayer, cross
@@ -27,14 +30,19 @@ let pNoise = {}
 let cues = {}
 let cueR = 13
 
+let c
 function setup() {
-  let c = createCanvas(720, 720)
+  c = createCanvas(720, 720)
   c.parent(select('#rendering'))
   ctx = c.drawingContext
+  console.log(ctx)
   noFill()
   imageMode(CENTER)
 
   midPoint = width / 2
+
+  saveButton = select('#save-button')
+  saveButton.mouseClicked(saveMyCanvas)
 
   polygon = select('#polygon')
   radius = select('#radius')
@@ -116,7 +124,7 @@ function draw() {
   push()
   translate(
     midPoint + pNoise.x.value() * noise(millis()),
-    midPoint + pNoise.y.value() * noise(millis())
+    midPoint + pNoise.y.value() * noise(0, millis())
   )
 
   rotatingCounter += (clockWiseCounter * rotatingSpeed.value() * PI * 0.01) / 60
@@ -171,6 +179,10 @@ function draw() {
 }
 
 function _runUpdateTextValue() {}
+
+function saveMyCanvas() {
+  saveCanvas(c, 'newStarburst', 'png')
+}
 
 /* --------------------------------- Helpers -------------------------------- */
 

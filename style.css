@@ -21,6 +21,7 @@ canvas {
     Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   background-color: #eee;
   border-radius: 3px;
+  color: #333;
 }
 
 .sliders-section {
@@ -28,6 +29,30 @@ canvas {
   height: fit-content;
   margin: 1.2rem auto 0 auto;
   display: block;
+  text-align: center;
+}
+
+.save-button {
+  width: 50%;
+  height: 24px;
+  margin: 0 auto;
+  font-weight: 500;
+  font-size: 0.75rem;
+  cursor: pointer;
+  background-color: #eee;
+  outline: none;
+  border-radius: 3px;
+  border: 1px solid #333;
+  padding-top: 2px;
+}
+
+.save-button:hover {
+  background-color: #bbb;
+}
+
+.save-button:active {
+  color: #333;
+  background-color: #fff;
 }
 
 .a-slider {
@@ -129,6 +154,17 @@ canvas {
   background: #666; /* Green background */
   cursor: pointer; /* Cursor on hover */
   border-radius: 3px;
+}
+
+.issue-div {
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.issue {
+  font-size: 0.75rem;
+  text-decoration: none;
+  color: #999;
 }
 
 /* -------------------------------- Rendering ------------------------------- */
