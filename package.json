@@ -1,0 +1,15 @@
+{
+  "name": "star",
+  "version": "0.0.1",
+  "description": "Research platform for scintillating starburst effects.",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md,html,css}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Peiling Jiang",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^2.1.2"
+  }
+}

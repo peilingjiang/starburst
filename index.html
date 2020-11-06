@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="p5.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Starburst</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <div class="control-panel">
+      <div class="sliders-section">
+        <div class="a-slider">
+          <p class="slider-name">Polygon</p>
+          <input
+            type="range"
+            min="3"
+            max="20"
+            value="7"
+            class="slider"
+            id="polygon"
+            oninput="_changeValue('polygon', this.value)"
+          />
+          <p class="slider-text" id="polygon-text">7</p>
+        </div>
+
+        <div class="a-slider">
+          <p class="slider-name">Radius</p>
+          <input
+            type="range"
+            min="100"
+            max="300"
+            value="200"
+            class="slider"
+            id="radius"
+            oninput="_changeValue('radius', this.value)"
+          />
+          <p class="slider-text" id="radius-text">200</p>
+        </div>
+
+        <div class="a-slider">
+          <p class="slider-name">Thickness</p>
+          <input
+            type="range"
+            min="1"
+            max="17"
+            value="8"
+            class="slider"
+            id="thickness"
+            oninput="_changeValue('thickness', this.value)"
+          />
+          <p class="slider-text" id="thickness-text">8</p>
+        </div>
+
+        <div class="a-checkbox">
+          <p class="checkbox-name" id="inner-layer-text">Inner Layer</p>
+          <input type="checkbox" checked class="checkbox" id="inner-layer" />
+        </div>
+
+        <div class="a-checkbox">
+          <p class="checkbox-name" id="cross-text">Cross</p>
+          <input type="checkbox" checked class="checkbox" id="cross" />
+        </div>
+      </div>
+
+      <div class="sliders-section">
+        <div class="a-slider">
+          <p class="slider-name">Children</p>
+          <input
+            type="range"
+            min="0"
+            max="9"
+            value="2"
+            class="slider"
+            id="child-num"
+            oninput="_changeValue('child-num', this.value)"
+          />
+          <p class="slider-text" id="child-num-text">2</p>
+        </div>
+
+        <div class="a-slider">
+          <p class="slider-name">Radius Ratio</p>
+          <input
+            type="range"
+            min="50"
+            max="100"
+            value="88"
+            class="slider"
+            id="r-ratio"
+            oninput="_changeValue('r-ratio', this.value)"
+          />
+          <p class="slider-text"><span id="r-ratio-text">88</span>%</p>
+        </div>
+
+        <div
+          class="a-checkbox"
+          title="The gap between layers being a constant value or by ratio."
+        >
+          <p class="checkbox-name" id="constant-gap-text">Const. Gap</p>
+          <input type="checkbox" checked class="checkbox" id="constant-gap" />
+        </div>
+
+        <div
+          class="a-checkbox"
+          title="The thickness changes as the radius or not."
+        >
+          <p class="checkbox-name" id="inner-layer-text">Perspective</p>
+          <input type="checkbox" checked class="checkbox" id="perspective" />
+        </div>
+      </div>
+
+      <div class="sliders-section">
+        <div class="a-slider">
+          <p class="slider-name">Stroke Color</p>
+          <input
+            type="range"
+            min="0"
+            max="255"
+            value="0"
+            class="slider"
+            id="stroke-color"
+            oninput="_changeValue('stroke-color', this.value)"
+          />
+          <p class="slider-text" id="stroke-color-text">0</p>
+        </div>
+
+        <div class="a-slider">
+          <p class="slider-name">Background</p>
+          <input
+            type="range"
+            min="0"
+            max="255"
+            value="210"
+            class="slider"
+            id="background"
+            oninput="_changeValue('background', this.value)"
+          />
+          <p class="slider-text" id="background-text">210</p>
+        </div>
+      </div>
+
+      <div class="sliders-section">
+        <div class="a-slider" title="Rotation (n π)">
+          <p class="slider-name">Rotation</p>
+          <input
+            type="range"
+            min="0"
+            max="50"
+            value="0"
+            class="slider"
+            id="rotation"
+            oninput="_changeValue('rotation', this.value)"
+          />
+          <p class="slider-text" id="rotation-text">0.00</p>
+        </div>
+
+        <div class="a-slider" title="Rotating Speed (n π per second)">
+          <p class="slider-name">Ro. Speed</p>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            class="slider"
+            id="rotating-speed"
+            oninput="_changeValue('rotating-speed', this.value)"
+          />
+          <p class="slider-text" id="rotating-speed-text">0.00</p>
+        </div>
+
+        <div
+          class="a-checkbox"
+          title="The structure rotates clockwise or counterclockwise."
+        >
+          <p class="checkbox-name" id="inner-layer-text">Clockwise</p>
+          <input type="checkbox" checked class="checkbox" id="clockwise" />
+        </div>
+      </div>
+
+      <div class="line-break"></div>
+
+      <div class="sliders-section">
+        <div class="a-slider" title="Add a pinhole to the view.">
+          <p class="slider-name">Pinhole</p>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            value="0"
+            class="slider"
+            id="pinhole"
+            oninput="_changeValue('pinhole', this.value)"
+          />
+          <p class="slider-text"><span id="pinhole-text">0</span>%</p>
+        </div>
+
+        <div class="a-slider" title="Flash (n times per second)">
+          <p class="slider-name">Flash</p>
+          <input
+            type="range"
+            min="0"
+            max="30"
+            value="0"
+            class="slider"
+            id="flash"
+            oninput="_changeValue('flash', this.value)"
+          />
+          <p class="slider-text" id="flash-text">0</p>
+        </div>
+
+        <div class="a-slider" title="Add Perlin Noise to Y offset.">
+          <p class="slider-name">Y Noise</p>
+          <input
+            type="range"
+            min="0"
+            max="50"
+            value="0"
+            class="slider"
+            id="y-noise"
+            oninput="_changeValue('y-noise', this.value)"
+          />
+          <p class="slider-text" id="y-noise-text">0</p>
+        </div>
+
+        <div class="a-slider" title="Add Perlin Noise to X offset.">
+          <p class="slider-name">X Noise</p>
+          <input
+            type="range"
+            min="0"
+            max="50"
+            value="0"
+            class="slider"
+            id="x-noise"
+            oninput="_changeValue('x-noise', this.value)"
+          />
+          <p class="slider-text" id="x-noise-text">0</p>
+        </div>
+      </div>
+
+      <div class="sliders-section">
+        <div class="a-checkbox" title="Add a center cue.">
+          <p class="checkbox-name" id="inner-layer-text">Center Cue</p>
+          <input type="checkbox" class="checkbox" id="center-cue" />
+        </div>
+
+        <div class="a-checkbox" title="Add a side cue.">
+          <p class="checkbox-name" id="inner-layer-text">Side Cue</p>
+          <input type="checkbox" class="checkbox" id="side-cue-1" />
+          <input type="checkbox" class="checkbox" id="side-cue-2" />
+          <input type="checkbox" class="checkbox" id="side-cue-3" />
+          <input type="checkbox" class="checkbox" id="side-cue-4" />
+        </div>
+
+        <div class="a-checkbox" title="Add a corner cue.">
+          <p class="checkbox-name" id="inner-layer-text">Corner Cue</p>
+          <input type="checkbox" class="checkbox" id="corner-cue-1" />
+          <input type="checkbox" class="checkbox" id="corner-cue-2" />
+          <input type="checkbox" class="checkbox" id="corner-cue-3" />
+          <input type="checkbox" class="checkbox" id="corner-cue-4" />
+        </div>
+      </div>
+    </div>
+
+    <div id="rendering"></div>
+
+    <script src="sketch.js"></script>
+  </body>
+</html>
