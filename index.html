@@ -7,7 +7,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>Starburst</title>
+    <title>Starburst Toolbox</title>
     <link rel="shortcut icon" type="image/x-icon" href="./media/favicon.ico" />
     <link rel="apple-touch-icon" href="./media/apple-touch-icon.png" />
     <meta charset="utf-8" />
@@ -15,7 +15,7 @@
   <body>
     <div class="control-panel">
       <div class="sliders-section">
-        <button class="save-button" id="save-button">Save</button>
+        <button class="save-button" id="save-button">Save Image</button>
       </div>
 
       <div class="sliders-section">
@@ -87,6 +87,20 @@
           <p class="slider-text" id="child-num-text">2</p>
         </div>
 
+        <div class="a-slider" title="Rotation offset of children layers.">
+          <p class="slider-name">Ro. Offset</p>
+          <input
+            type="range"
+            min="0"
+            max="50"
+            value="0"
+            class="slider"
+            id="ro-offset"
+            oninput="_changeValue('ro-offset', this.value)"
+          />
+          <p class="slider-text"><span id="ro-offset-text">0</span>%</p>
+        </div>
+
         <div class="a-slider">
           <p class="slider-name">Radius Ratio</p>
           <input
@@ -119,8 +133,21 @@
       </div>
 
       <div class="sliders-section">
+        <div
+          class="a-checkbox"
+          title="Use color or not. When using color, the color values are in HSB and S = 90, B = 170."
+        >
+          <p class="checkbox-name" id="inner-layer-text">Colorful</p>
+          <input
+            type="checkbox"
+            class="checkbox"
+            id="colorful"
+            onchange="_changeColorful()"
+          />
+        </div>
+
         <div class="a-slider">
-          <p class="slider-name">Stroke Color</p>
+          <p class="slider-name" id="stroke-color-name">Stroke Color</p>
           <input
             type="range"
             min="0"
@@ -134,7 +161,7 @@
         </div>
 
         <div class="a-slider">
-          <p class="slider-name">Background</p>
+          <p class="slider-name" id="background-name">Background</p>
           <input
             type="range"
             min="0"
@@ -183,6 +210,42 @@
         >
           <p class="checkbox-name" id="inner-layer-text">Clockwise</p>
           <input type="checkbox" checked class="checkbox" id="clockwise" />
+        </div>
+      </div>
+
+      <div class="sliders-section">
+        <div
+          class="a-slider"
+          title="Perspective on Y axis. (Rotate the shape by X axis for n π)"
+        >
+          <p class="slider-name">Y Perspective</p>
+          <input
+            type="range"
+            min="-50"
+            max="50"
+            value="0"
+            class="slider"
+            id="y-perspective"
+            oninput="_changePerspectiveValue('y', this.value)"
+          />
+          <p class="slider-text" id="y-perspective-text">0.00</p>
+        </div>
+
+        <div
+          class="a-slider"
+          title="Perspective on X axis. (Rotate the shape by Y axis for n π)"
+        >
+          <p class="slider-name">X Perspective</p>
+          <input
+            type="range"
+            min="-50"
+            max="50"
+            value="0"
+            class="slider"
+            id="x-perspective"
+            oninput="_changePerspectiveValue('x', this.value)"
+          />
+          <p class="slider-text" id="x-perspective-text">0.00</p>
         </div>
       </div>
 
@@ -272,11 +335,16 @@
       <div class="sliders-section issue-div">
         <a
           href="https://github.com/peilingjiang/starburst/issues/new"
-          class="issue"
+          class="text issue"
           target="_blank"
           rel="noreferrer noopener"
           >Report issue / Request feature</a
         >
+        <p class="text info">
+          Research toolbox for scintillating starburst effects<br />
+          NYU 2020<br /><br />
+          v0.2
+        </p>
       </div>
     </div>
 

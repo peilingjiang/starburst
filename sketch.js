@@ -9,6 +9,7 @@ let saveButton
 let polygon, radius, thickness, innerLayer, cross
 
 let children
+let roOffset
 let rRatio
 let constantGap
 let perspective
@@ -38,6 +39,7 @@ function setup() {
 
   noFill()
   imageMode(CENTER)
+  pixelDensity(3)
 
   midPoint = width / 2
 
@@ -51,6 +53,7 @@ function setup() {
   cross = select('#cross')
 
   children = select('#child-num')
+  roOffset = select('#ro-offset')
   rRatio = select('#r-ratio')
   constantGap = select('#constant-gap')
   perspective = select('#perspective')
@@ -79,7 +82,6 @@ function setup() {
   cues.corner3 = select('#corner-cue-3')
   cues.corner4 = select('#corner-cue-4')
 
-  // _runUpdateTextValue()
   nowTime = millis()
 }
 
@@ -110,9 +112,16 @@ function draw() {
 
   /* -------------------------------------------------------------------------- */
 
-  background(backgroundColor.value())
+  if (isColorful) {
+    colorMode(HSB)
+    background(backgroundColor.value(), 90, 170)
+    stroke(strokeColor.value(), 90, 170)
+  } else {
+    colorMode(RGB)
+    background(backgroundColor.value())
+    stroke(strokeColor.value())
+  }
 
-  stroke(strokeColor.value())
   strokeWeight(thickness.value())
 
   thisTime = millis()
@@ -123,8 +132,8 @@ function draw() {
 
   push()
   translate(
-    midPoint + pNoise.x.value() * noise(millis()),
-    midPoint + pNoise.y.value() * noise(0, millis())
+    midPoint + pNoise.x.value() * (noise(millis()) - 0.5),
+    midPoint + pNoise.y.value() * (noise(0, millis()) - 0.5)
   )
 
   rotatingCounter += (clockWiseCounter * rotatingSpeed.value() * PI * 0.01) / 60
@@ -137,8 +146,11 @@ function draw() {
 
     let childR = r
     let newThick = thick
+    // Draw children
     for (let i = 0; i < children.value(); i++) {
       let innerR = _getInner(p, _getInner(p, childR, newThick), newThick)
+
+      rotate((roOffset.value() * 0.01 * PI) / p)
 
       if (constantGap.checked())
         childR = Math.max(innerR - map(childRatio, 50, 100, r * 0.5, 0), 0)
@@ -155,6 +167,7 @@ function draw() {
   pop()
 
   push()
+  colorMode(RGB)
   fill(0)
   noStroke()
 
@@ -178,8 +191,6 @@ function draw() {
   pop()
 }
 
-function _runUpdateTextValue() {}
-
 function saveMyCanvas() {
   saveCanvas(c, 'newStarburst', 'png')
 }
@@ -202,7 +213,7 @@ function _drawSet(r, p, t, hI) {
   drawPolygon(0, 0, r, p)
   if (hI) drawPolygon(0, 0, _getInner(p, r, t), p, t)
   if (cross.checked()) {
-    rotate(TWO_PI / p / 2)
+    rotate(PI / p)
     drawPolygon(0, 0, r, p)
     if (hI) drawPolygon(0, 0, _getInner(p, r, t), p, t)
   }
@@ -218,6 +229,31 @@ function _changeValue(name, val) {
     return
   }
   document.getElementById(name + '-text').innerText = val
+}
+
+let yPerspective = 0
+let xPerspective = 0
+
+function _changePerspectiveValue(axis, val) {
+  let v = (val * 0.01).toFixed(2)
+  document.getElementById(`${axis}-perspective-text`).innerText = v
+  axis === 'x' ? (xPerspective = v) : (yPerspective = v)
+  document.getElementById('defaultCanvas0').style.transform = `rotateX(${
+    yPerspective * PI
+  }rad) rotateY(${xPerspective * PI}rad)`
+}
+
+let isColorful = false
+
+function _changeColorful() {
+  if (!isColorful) {
+    document.getElementById('stroke-color-name').innerHTML = 'Stroke Hue'
+    document.getElementById('background-name').innerHTML = 'BG Hue'
+  } else {
+    document.getElementById('stroke-color-name').innerHTML = 'Stroke Color'
+    document.getElementById('background-name').innerHTML = 'Background'
+  }
+  isColorful = !isColorful
 }
 
 function drawPinhole(r) {

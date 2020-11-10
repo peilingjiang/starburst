@@ -1,6 +1,6 @@
 {
-  "name": "star",
-  "version": "0.0.1",
+  "name": "starburst",
+  "version": "0.2.0",
   "description": "Research platform for scintillating starburst effects.",
   "main": "index.js",
   "scripts": {
@@ -11,5 +11,9 @@
   "license": "ISC",
   "devDependencies": {
     "prettier": "^2.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peilingjiang/starburst.git"
   }
 }
