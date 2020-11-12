@@ -185,7 +185,9 @@ function draw() {
   // Pinhole
   if (pinhole.value() != 0)
     drawPinhole(
-      _map(pinhole.value(), 0, 100, dist(0, 0, width, height) >> 1, 0)
+      pinholeType
+        ? _map(pinhole.value(), 0, 100, dist(0, 0, width, height) >> 1, 0)
+        : _map(pinhole.value(), 0, 100, width >> 1, 0)
     )
 
   pop()
@@ -256,8 +258,14 @@ function _changeColorful() {
   isColorful = !isColorful
 }
 
+let pinholeType = true // circle
+
+function _changePinhole() {
+  pinholeType = !pinholeType
+}
+
 function drawPinhole(r) {
-  translate(midPoint, midPoint)
+  pinholeType ? translate(midPoint, midPoint) : translate(0, 0)
   beginShape()
 
   vertex(-width, -height)
@@ -266,8 +274,17 @@ function drawPinhole(r) {
   vertex(-width, height)
 
   beginContour()
-  for (var i = 0; i <= 50; i++)
-    vertex(r * cos((-i * TWO_PI) / 50), r * sin((-i * TWO_PI) / 50))
+  if (pinholeType) {
+    for (var i = 0; i <= 50; i++)
+      vertex(r * cos((-i * TWO_PI) / 50), r * sin((-i * TWO_PI) / 50))
+  } else {
+    // Square
+    vertex(midPoint - r, midPoint + r)
+    vertex(midPoint + r, midPoint + r)
+    vertex(midPoint + r, midPoint - r)
+    vertex(midPoint - r, midPoint - r)
+  }
+
   endContour()
 
   endShape(CLOSE)
